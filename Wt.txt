@@ -1,0 +1,937 @@
+WEB TECHNOLOGY PRACTICE QUESTIONS WITH SIMPLE ANSWERS
+========================================================
+
+Note:
+- HTML/CSS/JavaScript programs should be saved as .html files.
+- PHP programs should be saved as .php files and run using a local PHP server such as XAMPP.
+- For questions 9 and 19, the original PDF's visual output is unclear here, so simple example designs are provided.
+- Use only your own test files for file deletion programs.
+
+PART 1: QUESTIONS 1-10
+======================
+
+QUESTION 1. Write HTML-CSS code to generate a List of Books table. Use Internal CSS.
+
+ANSWER:
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: Arial; }
+table { border-collapse: collapse; width: 70%; margin: auto; }
+th, td { border: 1px solid black; padding: 10px; text-align: center; }
+h2 { text-align: center; }
+</style>
+</head>
+<body>
+<h2>List of Books</h2>
+<table>
+<tr><th rowspan="2">Item No</th><th rowspan="2">Item Name</th><th colspan="2">Price</th></tr>
+<tr><th>Rs.</th><th>Paise</th></tr>
+<tr><td>1</td><td>Programming in Python</td><td>500</td><td>50</td></tr>
+<tr><td>2</td><td>Programming in Java</td><td>345</td><td>00</td></tr>
+<tr><th colspan="2">Total Bill</th><th>845</th><th>50</th></tr>
+</table>
+</body>
+</html>
+
+
+QUESTION 2. Write a PHP program to accept an email ID and validate it using a regular expression.
+
+ANSWER:
+<?php
+function checkEmail($email) {
+    return preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/", $email);
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"] ?? "";
+    echo checkEmail($email) ? "Valid Email" : "Invalid Email";
+}
+?>
+<form method="post">
+Enter Email: <input type="text" name="email" required>
+<input type="submit" value="Check">
+</form>
+
+
+QUESTION 3. Create a feedback form with dropdown, textarea, checkbox, radio button, textbox and submit button.
+
+ANSWER:
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: Arial; }
+form { width: 320px; margin: auto; }
+input, select, textarea { margin: 6px; padding: 5px; }
+</style>
+</head>
+<body>
+<h2 align="center">Feedback Form</h2>
+<form>
+Name: <input type="text" name="name"><br>
+Email: <input type="email" name="email"><br>
+Course: <select name="course"><option>BSc CS</option><option>BSc CDS</option></select><br>
+Gender: <input type="radio" name="gender" value="Male">Male
+<input type="radio" name="gender" value="Female">Female<br>
+<input type="checkbox" name="recommend"> Recommend us<br>
+Feedback:<br><textarea name="feedback"></textarea><br>
+<input type="submit" value="Submit">
+</form>
+</body>
+</html>
+
+
+QUESTION 4. Write JavaScript code to count vowels in a string. Use alert() to display the output.
+
+ANSWER:
+<!DOCTYPE html>
+<script>
+function countVowels(str) {
+    let count = 0;
+    str = str.toLowerCase();
+    for (let i = 0; i < str.length; i++) {
+        if ("aeiou".includes(str[i])) count++;
+    }
+    return count;
+}
+let s = prompt("Enter a string:");
+alert("Total vowels = " + countVowels(s || ""));
+</script>
+
+
+QUESTION 5. Write JavaScript to count how many times an element appears in an indexed array.
+
+ANSWER:
+<!DOCTYPE html>
+<script>
+function countElement(arr, element) {
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] == element) count++;
+    }
+    return count;
+}
+let a = [10, 20, 10, 30, 10, 40];
+let n = Number(prompt("Enter element to search:"));
+document.write("Element occurs " + countElement(a, n) + " times");
+</script>
+
+
+QUESTION 6. Design an HTML form to accept a string. In PHP: (a) find length without built-in functions, (b) count vowels using a function, (c) reverse using a built-in function.
+
+ANSWER:
+<?php
+function countVowels($str) {
+    $count = 0;
+    $str = strtolower($str);
+    for ($i = 0; $i < strlen($str); $i++) {
+        if (strpos("aeiou", $str[$i]) !== false) $count++;
+    }
+    return $count;
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $s = $_POST["str"];
+    $len = 0;
+    while (isset($s[$len])) $len++;
+    echo "Length = $len<br>";
+    echo "Vowels = " . countVowels($s) . "<br>";
+    echo "Reverse = " . strrev($s);
+}
+?>
+<form method="post">
+Enter String: <input type="text" name="str" required>
+<input type="submit" value="Submit">
+</form>
+
+
+QUESTION 7. Write JavaScript to validate a PIN code using prompt().
+
+ANSWER:
+<!DOCTYPE html>
+<script>
+function checkPin(pin) {
+    return /^[1-9][0-9]{5}$/.test(pin);
+}
+let pin = prompt("Enter 6-digit PIN code:");
+if (pin !== null && checkPin(pin)) alert("Valid PIN Code");
+else alert("Invalid PIN Code");
+</script>
+
+
+QUESTION 8. Write PHP to search for an element in an associative array and display an appropriate message.
+
+ANSWER:
+<?php
+$student = ["Rahul" => 80, "Amit" => 75, "Priya" => 90];
+function searchStudent($arr, $name) {
+    if (array_key_exists($name, $arr)) echo "$name found. Marks = " . $arr[$name];
+    else echo "$name not found";
+}
+searchStudent($student, "Priya");
+?>
+
+
+QUESTION 9. Write HTML-CSS code to display list items in different sizes, colors and fonts using external CSS.
+
+ANSWER (example design):
+File: q9.html
+<!DOCTYPE html>
+<html>
+<head><link rel="stylesheet" href="style.css"></head>
+<body>
+<h2>My Favourite Subjects</h2>
+<ul>
+<li class="one">Computer Science</li>
+<li class="two">Cyber Security</li>
+<li class="three">Python Programming</li>
+<li class="four">Web Technology</li>
+</ul>
+</body>
+</html>
+
+File: style.css
+.one { color: red; font-size: 24px; font-family: Arial; }
+.two { color: blue; font-size: 20px; font-family: Georgia; }
+.three { color: green; font-size: 18px; font-family: Verdana; }
+.four { color: purple; font-size: 16px; font-family: Tahoma; }
+
+
+QUESTION 10. Write HTML-CSS to design a first-year B.Sc. CDS theory timetable.
+
+ANSWER (example timetable; replace subjects/times as required):
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid black; padding: 10px; text-align: center; }
+th { background-color: lightblue; }
+</style>
+</head>
+<body>
+<h2 align="center">B.Sc. CDS Theory Time Table</h2>
+<table>
+<tr><th>Day</th><th>9-10</th><th>10-11</th><th>11-12</th><th>12-1</th></tr>
+<tr><td>Monday</td><td>Maths</td><td>Python</td><td>English</td><td>Statistics</td></tr>
+<tr><td>Tuesday</td><td>Python</td><td>Maths</td><td>Statistics</td><td>English</td></tr>
+<tr><td>Wednesday</td><td>Statistics</td><td>English</td><td>Maths</td><td>Python</td></tr>
+<tr><td>Thursday</td><td>English</td><td>Statistics</td><td>Python</td><td>Maths</td></tr>
+<tr><td>Friday</td><td>Maths</td><td>Python</td><td>Statistics</td><td>English</td></tr>
+</table>
+</body>
+</html>
+
+
+PART 2: QUESTIONS 11-20
+=======================
+
+QUESTION 11. Display family members on separate lines in different sizes using external CSS.
+
+ANSWER:
+File: q11.html
+<!DOCTYPE html>
+<html>
+<head><link rel="stylesheet" href="family.css"></head>
+<body>
+<p class="a">Father - 24px</p>
+<p class="b">Mother - 22px</p>
+<p class="c">Brother - 20px</p>
+<p class="d">Sister - 18px</p>
+</body>
+</html>
+
+File: family.css
+.a { font-size: 24px; }
+.b { font-size: 22px; }
+.c { font-size: 20px; }
+.d { font-size: 18px; }
+
+
+QUESTION 12. Write PHP to display first N terms of Fibonacci series using a variable function.
+
+ANSWER:
+<?php
+function fibonacci($n) {
+    $a = 0; $b = 1;
+    for ($i = 1; $i <= $n; $i++) {
+        echo $a . " ";
+        $c = $a + $b;
+        $a = $b;
+        $b = $c;
+    }
+}
+$fun = "fibonacci";
+$fun(10);
+?>
+
+
+QUESTION 13. Create an associative array of students (names as keys, marks as values) and sort by marks descending.
+
+ANSWER:
+<?php
+$students = ["Rahul" => 70, "Priya" => 95, "Amit" => 80, "Sneha" => 85];
+arsort($students);
+foreach ($students as $name => $marks) echo "$name : $marks<br>";
+?>
+
+
+QUESTION 14. Write JavaScript to display a multiplication table in tabular format.
+
+ANSWER:
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Multiplication Table</h2>
+<div id="result"></div>
+<script>
+function table(n) {
+    let s = "<table border='1' cellpadding='8'>";
+    for (let i = 1; i <= 10; i++) {
+        s += "<tr><td>" + n + " x " + i + "</td><td>" + (n * i) + "</td></tr>";
+    }
+    s += "</table>";
+    document.getElementById("result").innerHTML = s;
+}
+let n = Number(prompt("Enter number:"));
+table(n);
+</script>
+</body>
+</html>
+
+
+QUESTION 15. Write JavaScript function to reverse a string and display using alert().
+
+ANSWER:
+<!DOCTYPE html>
+<script>
+function reverseString(str) {
+    return str.split("").reverse().join("");
+}
+let s = prompt("Enter a string:");
+if (s !== null) alert("Reverse = " + reverseString(s));
+</script>
+
+
+QUESTION 16. Create two fruit arrays in PHP, merge them and display the result.
+
+ANSWER:
+<?php
+function mergeFruits($a, $b) {
+    return array_merge($a, $b);
+}
+$f1 = ["Apple", "Mango", "Banana"];
+$f2 = ["Orange", "Grapes", "Pineapple"];
+$result = mergeFruits($f1, $f2);
+print_r($result);
+?>
+
+
+QUESTION 17. Create a first-year student marksheet using inline CSS.
+
+ANSWER:
+<!DOCTYPE html>
+<html>
+<body>
+<div style="width:500px; margin:auto; border:2px solid black; padding:15px;">
+<h2 style="text-align:center;">Student Marksheet</h2>
+<p>Course: B.Sc. CDS</p><p>Seat No: 101</p><p>Name: Rahul Patil</p>
+<table style="width:100%; border-collapse:collapse;" border="1">
+<tr><th>Subject</th><th>Marks</th></tr>
+<tr><td>Python</td><td>80</td></tr>
+<tr><td>Mathematics</td><td>75</td></tr>
+<tr><td>Statistics</td><td>85</td></tr>
+<tr><td>English</td><td>70</td></tr>
+<tr><th>Total</th><th>310 / 400</th></tr>
+</table>
+<p>Percentage: 77.5%</p>
+</div>
+</body>
+</html>
+
+
+QUESTION 18. Append the line "This is an appended line." to sample.txt without overwriting.
+
+ANSWER:
+<?php
+function appendLine($file) {
+    $fp = fopen($file, "a");
+    fwrite($fp, "This is an appended line.\n");
+    fclose($fp);
+    echo "Line appended successfully";
+}
+appendLine("sample.txt");
+?>
+
+
+QUESTION 19. Design an HTML-CSS screen using external CSS.
+
+ANSWER (example login screen because the original target design is unclear):
+File: q19.html
+<!DOCTYPE html>
+<html>
+<head><link rel="stylesheet" href="login.css"></head>
+<body>
+<div class="box">
+<h2>Login Form</h2>
+<form>
+<input type="text" placeholder="Username" required><br>
+<input type="password" placeholder="Password" required><br>
+<button type="submit">Login</button>
+</form>
+</div>
+</body>
+</html>
+
+File: login.css
+body { font-family: Arial; background: #eeeeee; }
+.box { width: 300px; margin: 100px auto; padding: 20px; text-align: center; background: white; border: 1px solid gray; }
+input, button { margin: 8px; padding: 10px; }
+
+
+QUESTION 20. Read file contents line by line and display on a webpage.
+
+ANSWER:
+<?php
+function readFileLines($filename) {
+    if (!file_exists($filename)) { echo "File not found"; return; }
+    $fp = fopen($filename, "r");
+    while (($line = fgets($fp)) !== false) echo htmlspecialchars($line) . "<br>";
+    fclose($fp);
+}
+readFileLines("sample.txt");
+?>
+
+
+PART 3: QUESTIONS 21-30
+=======================
+
+QUESTION 21. Write JavaScript function to generate a random number between 1 and 100.
+
+ANSWER:
+<!DOCTYPE html>
+<script>
+function randomNumber() {
+    return Math.floor(Math.random() * 100) + 1;
+}
+document.write("Random Number = " + randomNumber());
+</script>
+
+
+QUESTION 22. Write PHP to check whether a string is a palindrome.
+
+ANSWER:
+<?php
+function palindrome($str) {
+    $str = strtolower($str);
+    if ($str == strrev($str)) echo "Palindrome";
+    else echo "Not Palindrome";
+}
+palindrome("madam");
+?>
+
+
+QUESTION 23. Write PHP to check whether a number is prime using a function and default parameter.
+
+ANSWER:
+<?php
+function isPrime($n = 7) {
+    if ($n < 2) return false;
+    for ($i = 2; $i <= sqrt($n); $i++) {
+        if ($n % $i == 0) return false;
+    }
+    return true;
+}
+$n = 7;
+echo isPrime($n) ? "Prime Number" : "Not Prime";
+?>
+
+
+QUESTION 24. Read Item.dat containing item code, item name, units sold and rate; display a bill.
+
+ANSWER:
+Create Item.dat with one item per line, fields separated by spaces:
+101 Pen 2 10
+102 Book 3 50
+103 Pencil 5 5
+104 Bag 1 500
+105 Scale 2 15
+
+PHP:
+<?php
+function displayBill($filename) {
+    if (!file_exists($filename)) { echo "Item.dat not found"; return; }
+    $fp = fopen($filename, "r");
+    echo "<table border='1' cellpadding='8'>";
+    echo "<tr><th>Code</th><th>Name</th><th>Units</th><th>Rate</th><th>Total</th></tr>";
+    while (($line = fgets($fp)) !== false) {
+        $item = preg_split('/\\s+/', trim($line));
+        if (count($item) == 4) {
+            $total = (int)$item[2] * (float)$item[3];
+            echo "<tr>";
+            foreach ($item as $value) echo "<td>" . htmlspecialchars($value) . "</td>";
+            echo "<td>$total</td></tr>";
+        }
+    }
+    echo "</table>";
+    fclose($fp);
+}
+displayBill("Item.dat");
+?>
+
+
+QUESTION 25. Accept a number in an HTML form. In PHP, display each digit in words and find the sum of digits.
+
+ANSWER:
+<?php
+function digitWords($n) {
+    $words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+    foreach (str_split((string)$n) as $digit) {
+        if ($digit == "-") echo "Minus ";
+        else echo $words[(int)$digit] . " ";
+    }
+}
+function sumDigits($n) {
+    $sum = 0;
+    foreach (str_split(ltrim((string)$n, "-")) as $d) $sum += (int)$d;
+    return $sum;
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $n = $_POST["num"];
+    echo "Digits in words: "; digitWords($n);
+    echo "<br>Sum = " . sumDigits($n);
+}
+?>
+<form method="post">
+<input type="number" name="num" required>
+<input type="submit" value="Submit">
+</form>
+
+
+QUESTION 26. Count digits in a number using onMouseOver event.
+
+ANSWER:
+<!DOCTYPE html>
+<html>
+<body>
+<input type="number" id="num" placeholder="Enter number">
+<button onmouseover="countDigits()">Count Digits</button>
+<p id="result"></p>
+<script>
+function countDigits() {
+    let n = document.getElementById("num").value.replace("-", "");
+    document.getElementById("result").innerHTML = "Digits = " + n.length;
+}
+</script>
+</body>
+</html>
+
+
+QUESTION 27. Accept a filename and display its type, size or delete it.
+
+ANSWER:
+Create an uploads folder and place test files inside it.
+<?php
+function fileOperations($name, $action) {
+    $name = basename($name);
+    $path = __DIR__ . "/uploads/" . $name;
+    if (!file_exists($path)) { echo "File not found"; return; }
+    if ($action == "type") echo "File type: " . mime_content_type($path);
+    elseif ($action == "size") echo "File size: " . filesize($path) . " bytes";
+    elseif ($action == "delete") {
+        if (is_file($path)) echo unlink($path) ? "File deleted" : "Delete failed";
+        else echo "Not a regular file";
+    }
+}
+?>
+<form method="post">
+Filename: <input name="filename" required>
+<select name="action"><option value="type">Type</option><option value="size">Size</option><option value="delete">Delete</option></select>
+<button type="submit">Execute</button>
+</form>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") fileOperations($_POST["filename"], $_POST["action"]);
+?>
+
+
+QUESTION 28. Write JavaScript to validate an Indian mobile number.
+
+ANSWER:
+<!DOCTYPE html>
+<script>
+function validMobile(mobile) {
+    return /^[6-9][0-9]{9}$/.test(mobile);
+}
+let m = prompt("Enter 10-digit Indian mobile number:");
+if (m !== null && validMobile(m)) alert("Valid Mobile Number");
+else alert("Invalid Mobile Number");
+</script>
+
+
+QUESTION 29. Read file contents and display lines in reverse order.
+
+ANSWER:
+<?php
+function reverseLines($filename) {
+    if (!file_exists($filename)) { echo "File not found"; return; }
+    $lines = file($filename);
+    $lines = array_reverse($lines);
+    foreach ($lines as $line) echo htmlspecialchars($line) . "<br>";
+}
+reverseLines("sample.txt");
+?>
+
+
+QUESTION 30. Validate a name using JavaScript.
+
+ANSWER:
+<!DOCTYPE html>
+<script>
+function validName(name) {
+    return /^[A-Za-z ]+$/.test(name.trim());
+}
+let name = prompt("Enter your name:");
+if (name !== null && validName(name)) document.write("Valid Name");
+else document.write("Invalid Name");
+</script>
+
+
+PART 4: QUESTIONS 31-40
+=======================
+
+QUESTION 31. Write PHP to copy content from one file to another.
+
+ANSWER:
+<?php
+function copyFileContent($source, $destination) {
+    if (!file_exists($source)) { echo "Source file not found"; return; }
+    if (copy($source, $destination)) echo "File copied successfully";
+    else echo "Copy failed";
+}
+copyFileContent("source.txt", "destination.txt");
+?>
+
+
+QUESTION 32. Validate a name using PHP regular expression.
+
+ANSWER:
+<?php
+function validName($name) {
+    return preg_match("/^[a-zA-Z ]+$/", $name);
+}
+$name = "Rahul Patil";
+if (validName($name)) echo "Valid Name";
+else echo "Invalid Name";
+?>
+
+
+QUESTION 33. Validate an Indian mobile number using PHP regular expression.
+
+ANSWER:
+<?php
+function validMobile($mobile) {
+    return preg_match("/^[6-9][0-9]{9}$/", $mobile);
+}
+$mobile = "9876543210";
+if (validMobile($mobile)) echo "Valid Mobile Number";
+else echo "Invalid Mobile Number";
+?>
+
+
+QUESTION 34. Write PHP to delete a specific file from the server.
+
+ANSWER:
+<?php
+function deleteFile($filename) {
+    $filename = basename($filename);
+    if (is_file($filename)) {
+        if (unlink($filename)) echo "File deleted successfully";
+        else echo "Unable to delete file";
+    } else echo "File not found";
+}
+deleteFile("sample.txt");
+?>
+
+
+QUESTION 35. Check whether a number is an Armstrong number and display the result on the same webpage.
+
+ANSWER:
+<!DOCTYPE html>
+<html>
+<body>
+<input type="number" id="num" placeholder="Enter number">
+<button onclick="checkArmstrong()">Check</button>
+<p id="result"></p>
+<script>
+function checkArmstrong() {
+    let n = document.getElementById("num").value;
+    let digits = String(n).split("");
+    let power = digits.length;
+    let sum = 0;
+    for (let d of digits) sum += Number(d) ** power;
+    if (n !== "" && Number(n) >= 0 && sum == Number(n))
+        document.getElementById("result").innerHTML = "Armstrong Number";
+    else document.getElementById("result").innerHTML = "Not Armstrong Number";
+}
+</script>
+</body>
+</html>
+
+
+QUESTION 36. Store five students' names and marks in an associative array and display the student with maximum marks.
+
+ANSWER:
+<?php
+$students = ["Rahul" => 75, "Amit" => 85, "Priya" => 95, "Sneha" => 80, "Neha" => 90];
+function maximumMarks($students) {
+    $max = max($students);
+    $name = array_search($max, $students);
+    echo "Student: $name<br>Maximum Marks: $max";
+}
+maximumMarks($students);
+?>
+
+
+QUESTION 37. Calculate sum of digits using a default parameter.
+
+ANSWER:
+<?php
+function sumDigits($n = 123) {
+    $sum = 0;
+    foreach (str_split((string)abs($n)) as $digit) $sum += (int)$digit;
+    return $sum;
+}
+echo "Sum = " . sumDigits();
+?>
+
+
+QUESTION 38. Design an email registration form using internal CSS.
+
+ANSWER:
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: Arial; background: #eeeeee; }
+form { width: 300px; margin: 40px auto; padding: 20px; background: white; }
+input { width: 95%; padding: 8px; margin: 7px 0; }
+button { padding: 8px 20px; }
+</style>
+</head>
+<body>
+<form>
+<h2>Email Registration</h2>
+<label>Name</label><input type="text" required>
+<label>Email</label><input type="email" required>
+<label>Password</label><input type="password" required>
+<label>Confirm Password</label><input type="password" required>
+<button type="submit">Register</button>
+</form>
+</body>
+</html>
+
+
+QUESTION 39. Count vowels in a string and display the result on the same webpage.
+
+ANSWER:
+<!DOCTYPE html>
+<html>
+<body>
+<input type="text" id="str" placeholder="Enter a string">
+<button onclick="showVowels()">Count Vowels</button>
+<p id="result"></p>
+<script>
+function countVowels(str) {
+    let count = 0;
+    for (let ch of str.toLowerCase()) if ("aeiou".includes(ch)) count++;
+    return count;
+}
+function showVowels() {
+    let s = document.getElementById("str").value;
+    document.getElementById("result").innerHTML = "Total vowels = " + countVowels(s);
+}
+</script>
+</body>
+</html>
+
+
+QUESTION 40. Convert array elements into variables using an appropriate PHP function.
+
+ANSWER:
+<?php
+function convertArray($arr) {
+    extract($arr);
+    echo "Name = $name<br>Age = $age<br>City = $city";
+}
+$data = ["name" => "Rahul", "age" => 20, "city" => "Pune"];
+convertArray($data);
+?>
+
+
+PART 5: QUESTIONS 41-50
+=======================
+
+QUESTION 41. Declare an integer array of five integers. Calculate sum, product and display odd numbers.
+
+ANSWER:
+<?php
+function arrayOperations($arr) {
+    echo "Sum = " . array_sum($arr) . "<br>";
+    echo "Product = " . array_product($arr) . "<br>";
+    echo "Odd numbers: ";
+    foreach ($arr as $n) if ($n % 2 != 0) echo $n . " ";
+}
+$numbers = [2, 3, 4, 5, 6];
+arrayOperations($numbers);
+?>
+
+
+QUESTION 42. Compare two strings in JavaScript and check whether they are equal.
+
+ANSWER:
+<!DOCTYPE html>
+<script>
+function compareStrings(a, b) {
+    if (a === b) document.write("Strings are Equal");
+    else document.write("Strings are Not Equal");
+}
+let s1 = prompt("Enter first string:");
+let s2 = prompt("Enter second string:");
+if (s1 !== null && s2 !== null) compareStrings(s1, s2);
+</script>
+
+
+QUESTION 43. Sort an associative array of five student names in ascending and descending order.
+
+ANSWER:
+<?php
+function sortNames($names) {
+    sort($names);
+    echo "Ascending: ";
+    print_r($names);
+    rsort($names);
+    echo "<br>Descending: ";
+    print_r($names);
+}
+$students = ["Rahul", "Amit", "Priya", "Sneha", "Neha"];
+sortNames($students);
+?>
+
+
+QUESTION 44. Accept a PAN number and validate its format using a regular expression.
+
+ANSWER:
+<?php
+function validPAN($pan) {
+    return preg_match("/^[A-Z]{5}[0-9]{4}[A-Z]$/", $pan);
+}
+$pan = "ABCDE1234F";
+if (validPAN($pan)) echo "Valid PAN Format";
+else echo "Invalid PAN Format";
+?>
+
+
+QUESTION 45. Store three fruit names in an associative array and print each name index-wise.
+
+ANSWER:
+<?php
+function displayFruits($fruits) {
+    foreach ($fruits as $index => $name) echo $index . " : " . $name . "<br>";
+}
+$fruits = [0 => "Apple", 1 => "Mango", 2 => "Banana"];
+displayFruits($fruits);
+?>
+
+
+QUESTION 46. Accept two strings. Check whether the small string appears at the start of the large string and find its position.
+
+ANSWER:
+<?php
+function searchString($large, $small) {
+    if (strpos($large, $small) === 0) echo "Small string appears at the start<br>";
+    else echo "Small string does not appear at the start<br>";
+    $pos = strpos($large, $small);
+    if ($pos !== false) echo "Position = " . $pos;
+    else echo "String not found";
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") searchString($_POST["large"], $_POST["small"]);
+?>
+<form method="post">
+Large String: <input name="large" required><br>
+Small String: <input name="small" required><br>
+<button type="submit">Search</button>
+</form>
+
+
+QUESTION 47. Check whether a string is a palindrome using JavaScript and display the result on the same page.
+
+ANSWER:
+<!DOCTYPE html>
+<html>
+<body>
+<input type="text" id="str" placeholder="Enter string">
+<button onclick="checkPalindrome()">Check</button>
+<p id="result"></p>
+<script>
+function checkPalindrome() {
+    let s = document.getElementById("str").value;
+    let rev = s.split("").reverse().join("");
+    if (s.toLowerCase() === rev.toLowerCase())
+        document.getElementById("result").innerHTML = "Palindrome";
+    else document.getElementById("result").innerHTML = "Not Palindrome";
+}
+</script>
+</body>
+</html>
+
+
+QUESTION 48. Store 10 numbers in a PHP array and print only even numbers using an appropriate function.
+
+ANSWER:
+<?php
+function displayEven($arr) {
+    $even = array_filter($arr, function($n) { return $n % 2 == 0; });
+    echo "Even numbers: ";
+    foreach ($even as $n) echo $n . " ";
+}
+$numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+displayEven($numbers);
+?>
+
+
+QUESTION 49. Read a file and display its contents with its size.
+
+ANSWER:
+<?php
+function displayFile($filename) {
+    if (!is_file($filename)) { echo "File not found"; return; }
+    $content = file_get_contents($filename);
+    echo "File Size = " . filesize($filename) . " bytes<br>";
+    echo "File Content:<br>";
+    echo nl2br(htmlspecialchars($content));
+}
+displayFile("sample.txt");
+?>
+
+
+QUESTION 50. Write a PHP function that accepts a file path and checks if the file exists.
+
+ANSWER:
+<?php
+function checkFile($path) {
+    if (file_exists($path)) echo "File exists";
+    else echo "File does not exist";
+}
+checkFile("sample.txt");
+?>
+
+
+QUICK EXAM NOTES
+================
+1. HTML page: save as filename.html and open in a browser.
+2. PHP page: save as filename.php inside XAMPP/htdocs and start Apache.
+3. HTML + PHP in the same file: save as .php.
+4. External CSS requires two files, for example q9.html + style.css.
+5. Common PHP array functions: array_merge(), array_sum(), array_product(), array_filter(), sort(), rsort(), arsort(), extract().
+6. Common PHP file functions: fopen(), fgets(), fwrite(), fclose(), file_exists(), filesize(), file_get_contents(), copy(), unlink().
+7. Use file deletion programs only on your own test files.
