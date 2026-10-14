@@ -1,0 +1,1098 @@
+=====================================================================
+ CDS-242-MNP  Lab on Web Technology  -  SOLUTIONS FOR ALL 25 SLIPS
+ (Q1 + Q2 solved for every slip. Q3 is Viva - see short viva notes at end)
+=====================================================================
+HOW TO RUN: Save PHP files in htdocs (XAMPP) / www (WAMP), start Apache,
+open http://localhost/filename.php
+HTML/JS files can be opened directly in the browser.
+=====================================================================
+
+
+#####################################################################
+SLIP 1
+#####################################################################
+
+--- Q1. PHP: student with maximum marks (slip1_q1.php) ---
+<?php
+$students = array("Amit"=>78, "Riya"=>92, "Sam"=>65, "Neha"=>88, "Raj"=>70);
+$max = 0;
+$name = "";
+foreach ($students as $n => $m) {
+    if ($m > $max) {
+        $max = $m;
+        $name = $n;
+    }
+}
+echo "Student with maximum marks: $name ($max)";
+?>
+
+--- Q2. HTML + Internal CSS: List of Books (slip1_q2.html) ---
+<!DOCTYPE html>
+<html>
+<head>
+<title>List of Books</title>
+<style>
+  table { border-collapse: collapse; margin: auto; }
+  th, td { border: 1px solid black; padding: 6px 12px; text-align: center; }
+  caption { font-size: 22px; font-weight: bold; margin-bottom: 8px; }
+  th { background-color: #ddd; }
+</style>
+</head>
+<body>
+<table>
+  <caption>List of Books</caption>
+  <tr>
+    <th rowspan="2">Item No</th>
+    <th rowspan="2">Item Name</th>
+    <th colspan="2">Price</th>
+  </tr>
+  <tr>
+    <th>Rs.</th>
+    <th>Paise</th>
+  </tr>
+  <tr><td>1</td><td>Programming in Python</td><td>500</td><td>50</td></tr>
+  <tr><td>2</td><td>Programming in Java</td><td>345</td><td>00</td></tr>
+  <tr>
+    <th colspan="2">Total Bill</th>
+    <th>845</th>
+    <th>50</th>
+  </tr>
+</table>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 2
+#####################################################################
+
+--- Q1. PHP: prime number using function + default parameter (slip2_q1.php) ---
+<?php
+function isPrime($n = 7) {          // default parameter
+    if ($n < 2) return false;
+    for ($i = 2; $i <= sqrt($n); $i++) {
+        if ($n % $i == 0) return false;
+    }
+    return true;
+}
+
+echo "Default (7): " . (isPrime() ? "Prime" : "Not Prime") . "<br>";
+$num = 29;
+echo "$num is " . (isPrime($num) ? "Prime" : "Not Prime");
+?>
+
+--- Q2. PHP: read Item.dat and display Bill (slip2_q2.php) ---
+First create Item.dat in the same folder (format: code,name,units,rate):
+101,Pen,10,5
+102,Notebook,5,40
+103,Pencil,20,3
+104,Eraser,8,4
+105,Marker,3,25
+
+<?php
+$file = fopen("Item.dat", "r");
+echo "<table border='1' cellpadding='6' style='border-collapse:collapse'>";
+echo "<tr><th>Code</th><th>Name</th><th>Units Sold</th><th>Rate</th><th>Amount</th></tr>";
+$total = 0;
+while (($line = fgets($file)) !== false) {
+    $line = trim($line);
+    if ($line == "") continue;
+    list($code, $name, $units, $rate) = explode(",", $line);
+    $amt = $units * $rate;
+    $total += $amt;
+    echo "<tr><td>$code</td><td>$name</td><td>$units</td><td>$rate</td><td>$amt</td></tr>";
+}
+echo "<tr><th colspan='4'>Total Bill</th><th>$total</th></tr>";
+echo "</table>";
+fclose($file);
+?>
+
+
+#####################################################################
+SLIP 3
+#####################################################################
+
+--- Q1. PHP: palindrome string with user input (slip3_q1.php) ---
+<html>
+<body>
+<form method="post">
+  Enter a string: <input type="text" name="str">
+  <input type="submit" value="Check">
+</form>
+
+<?php
+if (isset($_POST['str'])) {
+    $str = $_POST['str'];
+    if ($str == strrev($str))
+        echo "$str is a Palindrome";
+    else
+        echo "$str is NOT a Palindrome";
+}
+?>
+</body>
+</html>
+
+(To ignore upper/lower case, use: $s = strtolower($str); if ($s == strrev($s)) )
+
+--- Q2. JavaScript: random number between 1 and 100 (slip3_q2.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Random Number between 1 and 100</h3>
+<button onclick="show()">Generate</button>
+<p id="out"></p>
+<script>
+function getRandom() {
+    return Math.floor(Math.random() * 100) + 1;
+}
+function show() {
+    document.getElementById("out").innerHTML = "Random number: " + getRandom();
+}
+</script>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 4
+#####################################################################
+
+--- Q1. PHP: read file line by line (slip4_q1.php) ---
+(Create a file data.txt with a few lines of text)
+<?php
+$file = fopen("data.txt", "r");
+while (!feof($file)) {
+    echo fgets($file) . "<br>";
+}
+fclose($file);
+?>
+
+--- Q2. HTML + External CSS: header / sidebar / content / footer ---
+File 1: slip4_q2.html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Layout</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div class="wrapper">
+  <div class="header"><h1>This is a header.</h1></div>
+  <div class="left">Look in the box at the right for some information.</div>
+  <div class="right">Here is some information.</div>
+  <div class="footer"><h1>This is a footer.</h1></div>
+</div>
+</body>
+</html>
+
+File 2: style.css
+.wrapper { width: 600px; border: 1px solid black; overflow: hidden; }
+.header, .footer { border: 1px solid gray; padding: 5px 10px; }
+.left  { float: left;  width: 140px; height: 150px; padding: 8px;
+         border: 1px solid gray; box-sizing: border-box; }
+.right { float: left;  width: 458px; height: 150px; padding: 8px;
+         border: 1px solid gray; box-sizing: border-box; }
+.footer { clear: both; }
+
+
+#####################################################################
+SLIP 5
+#####################################################################
+
+--- Q1. PHP: append line to sample.txt (slip5_q1.php) ---
+<?php
+$file = fopen("sample.txt", "a");      // "a" = append mode
+fwrite($file, "This is an appended line.\n");
+fclose($file);
+echo "Line appended. File content:<br>";
+echo nl2br(file_get_contents("sample.txt"));
+?>
+
+--- Q2. HTML + Inline CSS: Mark sheet (slip5_q2.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+<h2 style="text-align:center;">MARK SHEET - F.Y. B.Sc. (Cyber and Digital Science)</h2>
+<p style="text-align:center;">Seat No: <b>1001</b> &nbsp;&nbsp; Name: <b>Rahul Patil</b> &nbsp;&nbsp; Course: <b>B.Sc. CDS</b></p>
+<table style="border-collapse:collapse; margin:auto; width:60%; text-align:center;" border="1" cellpadding="6">
+  <tr style="background-color:#ccc;">
+    <th>Sr No</th><th>Subject Name</th><th>Max Marks</th><th>Marks Obtained</th>
+  </tr>
+  <tr><td>1</td><td>Programming in C</td><td>100</td><td>78</td></tr>
+  <tr><td>2</td><td>Web Technology</td><td>100</td><td>82</td></tr>
+  <tr><td>3</td><td>Database Management</td><td>100</td><td>74</td></tr>
+  <tr><td>4</td><td>Mathematics</td><td>100</td><td>69</td></tr>
+  <tr><td>5</td><td>Electronics</td><td>100</td><td>71</td></tr>
+  <tr style="font-weight:bold;"><td colspan="2">Total_Marks</td><td>500</td><td>374</td></tr>
+  <tr style="font-weight:bold;"><td colspan="3">Percentage</td><td>74.8 %</td></tr>
+</table>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 6
+#####################################################################
+
+--- Q1. PHP: merge two fruit arrays (slip6_q1.php) ---
+<?php
+$a = array("Apple", "Banana", "Mango");
+$b = array("Orange", "Grapes", "Guava");
+$merged = array_merge($a, $b);
+echo "Merged array:<br>";
+foreach ($merged as $f) {
+    echo $f . "<br>";
+}
+// or: print_r($merged);
+?>
+
+--- Q2. JavaScript: reverse string using function + alert (slip6_q2.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+function reverseString(s) {
+    var rev = "";
+    for (var i = s.length - 1; i >= 0; i--) {
+        rev += s[i];
+    }
+    return rev;
+}
+var str = prompt("Enter a string:");
+alert("Reversed string: " + reverseString(str));
+</script>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 7
+#####################################################################
+
+--- Q1. JavaScript: multiplication table in tabular format (slip7_q1.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+var n = parseInt(prompt("Enter a number:"));
+document.write("<table border='1' cellpadding='5' style='border-collapse:collapse'>");
+for (var i = 1; i <= 10; i++) {
+    document.write("<tr><td>" + n + " x " + i + "</td><td>=</td><td>" + (n * i) + "</td></tr>");
+}
+document.write("</table>");
+</script>
+</body>
+</html>
+
+--- Q2. PHP: sort students by marks descending (slip7_q2.php) ---
+<?php
+$students = array("Amit"=>78, "Riya"=>92, "Sam"=>65, "Neha"=>88, "Raj"=>70);
+arsort($students);        // sort by value, descending
+echo "<table border='1' cellpadding='5'><tr><th>Name</th><th>Marks</th></tr>";
+foreach ($students as $name => $marks) {
+    echo "<tr><td>$name</td><td>$marks</td></tr>";
+}
+echo "</table>";
+?>
+
+
+#####################################################################
+SLIP 8
+#####################################################################
+
+--- Q1. HTML + External CSS: family members in different sizes ---
+File 1: slip8_q1.html
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="family.css">
+</head>
+<body>
+<p class="s1">Father - Font size 40px</p>
+<p class="s2">Mother - Font size 32px</p>
+<p class="s3">Brother - Font size 24px</p>
+<p class="s4">Sister - Font size 18px</p>
+<p class="s5">Me - Font size 12px</p>
+</body>
+</html>
+
+File 2: family.css
+.s1 { font-size: 40px; }
+.s2 { font-size: 32px; }
+.s3 { font-size: 24px; }
+.s4 { font-size: 18px; }
+.s5 { font-size: 12px; }
+
+--- Q2. PHP: Fibonacci first N terms using variable function (slip8_q2.php) ---
+<?php
+function fibo($n) {
+    $a = 0; $b = 1;
+    for ($i = 1; $i <= $n; $i++) {
+        echo $a . " ";
+        $c = $a + $b;
+        $a = $b;
+        $b = $c;
+    }
+}
+$fun = "fibo";        // variable function
+$fun(10);             // calls fibo(10)
+?>
+
+
+#####################################################################
+SLIP 9
+#####################################################################
+
+--- Q1. PHP: sum of digits with default parameter (slip9_q1.php) ---
+<?php
+function sumDigits($n = 123) {
+    $sum = 0;
+    while ($n > 0) {
+        $sum += $n % 10;
+        $n = (int)($n / 10);
+    }
+    return $sum;
+}
+echo "Default sum: " . sumDigits() . "<br>";
+echo "Sum of digits of 4567 = " . sumDigits(4567);
+?>
+
+--- Q2. HTML + Internal CSS: Email Registration form (slip9_q2.html) ---
+<!DOCTYPE html>
+<html>
+<head>
+<title>Email Registration</title>
+<style>
+  body { font-family: Arial; background: #f2f2f2; }
+  form { width: 350px; margin: 30px auto; padding: 20px; background: white;
+         border: 1px solid #999; border-radius: 6px; }
+  h2 { text-align: center; color: darkblue; }
+  label { display: block; margin-top: 10px; }
+  input[type=text], input[type=email], input[type=password] { width: 100%; padding: 6px; }
+  input[type=submit] { margin-top: 15px; padding: 8px 20px; background: darkblue; color: white; border: none; }
+</style>
+</head>
+<body>
+<form action="#" method="post">
+  <h2>Email Registration</h2>
+  <label>First Name</label><input type="text" name="fname">
+  <label>Last Name</label><input type="text" name="lname">
+  <label>Email Id</label><input type="email" name="email">
+  <label>Password</label><input type="password" name="pass">
+  <label>Confirm Password</label><input type="password" name="cpass">
+  <label>Gender</label>
+  <input type="radio" name="g" value="M"> Male
+  <input type="radio" name="g" value="F"> Female
+  <br>
+  <input type="submit" value="Register">
+</form>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 10
+#####################################################################
+
+--- Q1. JavaScript: count vowels, show on same page (slip10_q1.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+Enter string: <input type="text" id="s">
+<button onclick="countV()">Count Vowels</button>
+<p id="out"></p>
+<script>
+function countV() {
+    var str = document.getElementById("s").value.toLowerCase();
+    var count = 0;
+    for (var i = 0; i < str.length; i++) {
+        if ("aeiou".indexOf(str[i]) != -1) count++;
+    }
+    document.getElementById("out").innerHTML = "Number of vowels = " + count;
+}
+</script>
+</body>
+</html>
+
+--- Q2. HTML + CSS: Theory time table (slip10_q2.html) ---
+<!DOCTYPE html>
+<html>
+<head>
+<title>Time Table</title>
+<style>
+  table { border-collapse: collapse; margin: auto; width: 90%; text-align: center; }
+  th, td { border: 1px solid black; padding: 8px; }
+  th { background: #336699; color: white; }
+  h2 { text-align: center; }
+  .break { background: #ffe9a8; font-weight: bold; }
+</style>
+</head>
+<body>
+<h2>Theory Time Table - F.Y. B.Sc. (CDS)</h2>
+<table>
+  <tr><th>Day</th><th>8-9</th><th>9-10</th><th class="break">Break</th><th>10:15-11:15</th><th>11:15-12:15</th></tr>
+  <tr><td>Monday</td><td>C Programming</td><td>Maths</td><td class="break" rowspan="6">Break</td><td>Electronics</td><td>DBMS</td></tr>
+  <tr><td>Tuesday</td><td>DBMS</td><td>C Programming</td><td>Maths</td><td>English</td></tr>
+  <tr><td>Wednesday</td><td>Electronics</td><td>DBMS</td><td>C Programming</td><td>Maths</td></tr>
+  <tr><td>Thursday</td><td>Maths</td><td>English</td><td>DBMS</td><td>Electronics</td></tr>
+  <tr><td>Friday</td><td>C Programming</td><td>Electronics</td><td>English</td><td>Maths</td></tr>
+  <tr><td>Saturday</td><td>English</td><td>C Programming</td><td>Electronics</td><td>DBMS</td></tr>
+</table>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 11
+#####################################################################
+
+--- Q1. PHP: array elements into variables - extract() (slip11_q1.php) ---
+<?php
+$arr = array("name"=>"Amit", "age"=>20, "city"=>"Pune");
+extract($arr);       // creates $name, $age, $city
+echo "Name: $name<br>Age: $age<br>City: $city";
+?>
+
+--- Q2. HTML + External CSS: nested list with different size/color/font ---
+File 1: slip11_q2.html
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="list.css">
+</head>
+<body>
+<ul class="main">
+  <li>Non flowering plants
+    <ul class="circle">
+      <li>Fern</li>
+      <li>Spore</li>
+    </ul>
+  </li>
+  <li>Flowering plants
+    <ul class="square">
+      <li>Lilly</li>
+      <li>Rose
+        <ol>
+          <li>Red Rose</li>
+          <li>Pink Rose</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>
+
+File 2: list.css
+ul.main   { list-style-type: disc;   font-size: 22px; color: green;  font-family: Arial; }
+ul.circle { list-style-type: circle; font-size: 18px; color: blue;   font-family: Verdana; }
+ul.square { list-style-type: square; font-size: 18px; color: purple; font-family: "Times New Roman"; }
+ol        { list-style-type: decimal; font-size: 15px; color: red;   font-family: Courier New; }
+
+
+#####################################################################
+SLIP 12
+#####################################################################
+
+--- Q1. PHP: sum, product, odd numbers of an array (slip12_q1.php) ---
+<?php
+$a = array(3, 8, 5, 10, 7);
+$sum = 0;
+$prod = 1;
+foreach ($a as $x) {
+    $sum += $x;
+    $prod *= $x;
+}
+echo "Sum = $sum<br>";
+echo "Product = $prod<br>";
+echo "Odd numbers: ";
+foreach ($a as $x) {
+    if ($x % 2 != 0) echo $x . " ";
+}
+?>
+
+--- Q2. JavaScript: compare two strings (slip12_q2.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+var s1 = prompt("Enter first string:");
+var s2 = prompt("Enter second string:");
+if (s1 === s2)
+    alert("Both strings are equal");
+else
+    alert("Strings are NOT equal");
+</script>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 13
+#####################################################################
+
+--- Q1. PHP: sort associative array ascending & descending (slip13_q1.php) ---
+<?php
+$stu = array("s1"=>"Rahul", "s2"=>"Amit", "s3"=>"Zoya", "s4"=>"Neha", "s5"=>"Kiran");
+
+asort($stu);     // ascending by value (name)
+echo "<b>Ascending:</b><br>";
+foreach ($stu as $k => $v) echo "$k => $v<br>";
+
+arsort($stu);    // descending by value (name)
+echo "<br><b>Descending:</b><br>";
+foreach ($stu as $k => $v) echo "$k => $v<br>";
+?>
+
+--- Q2. PHP: PAN number validation (slip13_q2.php) ---
+PAN format: 5 capital letters, 4 digits, 1 capital letter (e.g. ABCDE1234F)
+
+<html>
+<body>
+<form method="post">
+  Enter PAN Number: <input type="text" name="pan">
+  <input type="submit" value="Check">
+</form>
+<?php
+if (isset($_POST['pan'])) {
+    $pan = $_POST['pan'];
+    if (preg_match("/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/", $pan))
+        echo "$pan is a VALID PAN number";
+    else
+        echo "$pan is INVALID PAN number";
+}
+?>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 14
+#####################################################################
+
+--- Q1. PHP: 3 fruits in associative array, print index wise (slip14_q1.php) ---
+<?php
+$fruits = array("f1"=>"Apple", "f2"=>"Banana", "f3"=>"Mango");
+foreach ($fruits as $index => $name) {
+    echo "$index : $name<br>";
+}
+?>
+
+--- Q2. PHP: form with two strings (slip14_q2.php) ---
+<html>
+<body>
+<form method="post">
+  Large String: <input type="text" name="large"><br><br>
+  Small String: <input type="text" name="small"><br><br>
+  <input type="submit" value="Submit">
+</form>
+<?php
+if (isset($_POST['large'])) {
+    $large = $_POST['large'];
+    $small = $_POST['small'];
+
+    // a. appears at start?
+    if (strpos($large, $small) === 0)
+        echo "a) Small string appears at the START of large string.<br>";
+    else
+        echo "a) Small string does NOT appear at the start.<br>";
+
+    // b. position
+    $pos = strpos($large, $small);
+    if ($pos !== false)
+        echo "b) Position of small string = $pos (index starts from 0)";
+    else
+        echo "b) Small string not found";
+}
+?>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 15
+#####################################################################
+
+--- Q1. JavaScript: palindrome check, result on same page (slip15_q1.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+Enter string: <input type="text" id="s">
+<button onclick="check()">Check</button>
+<p id="out"></p>
+<script>
+function check() {
+    var str = document.getElementById("s").value;
+    var rev = str.split("").reverse().join("");
+    if (str == rev)
+        document.getElementById("out").innerHTML = str + " is a Palindrome";
+    else
+        document.getElementById("out").innerHTML = str + " is NOT a Palindrome";
+}
+</script>
+</body>
+</html>
+
+--- Q2. PHP: 10 numbers in array, print only even (slip15_q2.php) ---
+<?php
+$nums = array(11, 12, 5, 8, 20, 33, 4, 7, 10, 15);
+
+function isEven($x) {
+    return $x % 2 == 0;
+}
+$even = array_filter($nums, "isEven");     // appropriate function
+echo "Even numbers: " . implode(", ", $even);
+?>
+
+
+#####################################################################
+SLIP 16
+#####################################################################
+
+--- Q1. PHP: read file and display contents with size (slip16_q1.php) ---
+<?php
+$filename = "data.txt";
+echo "<b>File Contents:</b><br>";
+echo nl2br(file_get_contents($filename));
+echo "<br><br><b>File Size:</b> " . filesize($filename) . " bytes";
+?>
+
+--- Q2. PHP: search element in associative array (slip16_q2.php) ---
+<?php
+$stu = array("Amit"=>78, "Riya"=>92, "Sam"=>65);
+$search = "Riya";              // key to search
+if (array_key_exists($search, $stu))
+    echo "$search found. Marks = " . $stu[$search];
+else
+    echo "$search NOT found in the array";
+
+// To search by value use:
+// if (in_array(65, $stu)) echo "Value found";
+?>
+
+
+#####################################################################
+SLIP 17
+#####################################################################
+
+--- Q1. JavaScript: validate pincode using prompt() (slip17_q1.html) ---
+Indian pincode = 6 digits, first digit not 0.
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+var pin = prompt("Enter your pincode:");
+var pattern = /^[1-9][0-9]{5}$/;
+if (pattern.test(pin))
+    document.write("Valid Pincode: " + pin);
+else
+    document.write("Invalid Pincode");
+</script>
+</body>
+</html>
+
+--- Q2. PHP: function to check if file exists (slip17_q2.php) ---
+<?php
+function checkFile($path) {
+    if (file_exists($path))
+        echo "File '$path' exists.";
+    else
+        echo "File '$path' does NOT exist.";
+}
+checkFile("data.txt");
+?>
+
+
+#####################################################################
+SLIP 18
+#####################################################################
+
+--- Q1. JavaScript: Armstrong number (slip18_q1.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+Enter number: <input type="text" id="n">
+<button onclick="arm()">Check</button>
+<p id="out"></p>
+<script>
+function arm() {
+    var num = parseInt(document.getElementById("n").value);
+    var temp = num, sum = 0, len = String(num).length;
+    while (temp > 0) {
+        var d = temp % 10;
+        sum += Math.pow(d, len);
+        temp = Math.floor(temp / 10);
+    }
+    if (sum == num)
+        document.getElementById("out").innerHTML = num + " is an Armstrong number";
+    else
+        document.getElementById("out").innerHTML = num + " is NOT an Armstrong number";
+}
+</script>
+</body>
+</html>
+
+--- Q2. HTML form + PHP string operations (slip18_q2.php) ---
+<html>
+<body>
+<form method="post">
+  Enter a string: <input type="text" name="str">
+  <input type="submit" value="Submit">
+</form>
+<?php
+// a) length without built-in function
+function myLength($s) {
+    $i = 0;
+    while (isset($s[$i])) $i++;
+    return $i;
+}
+// b) count vowels
+function countVowels($s) {
+    $c = 0;
+    $s = strtolower($s);
+    for ($i = 0; $i < strlen($s); $i++) {
+        if ($s[$i]=='a' || $s[$i]=='e' || $s[$i]=='i' || $s[$i]=='o' || $s[$i]=='u')
+            $c++;
+    }
+    return $c;
+}
+if (isset($_POST['str'])) {
+    $str = $_POST['str'];
+    echo "a) Length = " . myLength($str) . "<br>";
+    echo "b) Vowels = " . countVowels($str) . "<br>";
+    echo "c) Reverse = " . strrev($str);       // built-in
+}
+?>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 19
+#####################################################################
+
+--- Q1. PHP: mobile number validation using regex (slip19_q1.php) ---
+Valid Indian mobile: 10 digits, starts with 6,7,8 or 9.
+<?php
+$mobile = "9876543210";
+if (preg_match("/^[6-9][0-9]{9}$/", $mobile))
+    echo "$mobile is a VALID mobile number";
+else
+    echo "$mobile is INVALID";
+?>
+
+--- Q2. JavaScript: count occurrences of an element in an array (slip19_q2.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+var arr = [3, 5, 2, 5, 7, 5, 9, 2];
+var x = parseInt(prompt("Enter element to count:"));
+var count = 0;
+for (var i = 0; i < arr.length; i++) {
+    if (arr[i] == x) count++;
+}
+document.write("Array: " + arr + "<br>");
+document.write("Element " + x + " appears " + count + " time(s)");
+</script>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 20
+#####################################################################
+
+--- Q1. PHP: display file contents in reverse order (slip20_q1.php) ---
+<?php
+$lines = file("data.txt");              // reads lines into array
+$rev = array_reverse($lines);           // last line first
+foreach ($rev as $line) {
+    echo $line . "<br>";
+}
+// To reverse the characters of whole file instead:
+// echo strrev(file_get_contents("data.txt"));
+?>
+
+--- Q2. JavaScript: mobile number validation (slip20_q2.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+Mobile No: <input type="text" id="m">
+<button onclick="check()">Validate</button>
+<script>
+function check() {
+    var mob = document.getElementById("m").value;
+    var pattern = /^[6-9][0-9]{9}$/;
+    if (pattern.test(mob))
+        alert("Valid mobile number");
+    else
+        alert("Invalid mobile number");
+}
+</script>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 21
+#####################################################################
+
+--- Q1. JavaScript: count vowels, show with alert() (slip21_q1.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+var str = prompt("Enter a string:").toLowerCase();
+var count = 0;
+for (var i = 0; i < str.length; i++) {
+    var ch = str.charAt(i);
+    if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u')
+        count++;
+}
+alert("Number of vowels = " + count);
+</script>
+</body>
+</html>
+
+--- Q2. PHP: file operations - type, size, delete (slip21_q2.php) ---
+<html>
+<body>
+<form method="post">
+  Enter file name: <input type="text" name="fname">
+  <input type="submit" value="Submit">
+</form>
+<?php
+if (isset($_POST['fname'])) {
+    $f = $_POST['fname'];
+    if (file_exists($f)) {
+        echo "a) File type: " . filetype($f) . "<br>";
+        echo "b) File size: " . filesize($f) . " bytes<br>";
+        if (unlink($f))
+            echo "c) File deleted successfully";
+        else
+            echo "c) Could not delete file";
+    } else {
+        echo "File does not exist";
+    }
+}
+?>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 22
+#####################################################################
+
+--- Q1. JavaScript: count digits in a number using onMouseOver (slip22_q1.html) ---
+<!DOCTYPE html>
+<html>
+<body>
+Enter number: <input type="text" id="n"><br><br>
+<div style="width:200px; height:40px; background:lightblue;"
+     onmouseover="countDigits()">Move mouse here</div>
+<p id="out"></p>
+<script>
+function countDigits() {
+    var num = document.getElementById("n").value;
+    document.getElementById("out").innerHTML = "Number of digits = " + num.length;
+}
+</script>
+</body>
+</html>
+
+--- Q2. HTML form + PHP: digits in words and sum of digits (slip22_q2.php) ---
+<html>
+<body>
+<form method="post">
+  Enter a number: <input type="text" name="num">
+  <input type="submit" value="Submit">
+</form>
+<?php
+if (isset($_POST['num'])) {
+    $num = $_POST['num'];
+    $words = array("Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine");
+    $sum = 0;
+    echo "a) Digits in words: ";
+    for ($i = 0; $i < strlen($num); $i++) {
+        $d = $num[$i];
+        echo $words[$d] . " ";
+        $sum += $d;
+    }
+    echo "<br>b) Sum of digits = $sum";
+}
+?>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 23
+#####################################################################
+
+--- Q1. PHP: copy content of one file into another (slip23_q1.php) ---
+<?php
+$src = "source.txt";
+$dest = "destination.txt";
+if (copy($src, $dest))
+    echo "File copied successfully.<br>" . nl2br(file_get_contents($dest));
+else
+    echo "Copy failed";
+
+// Alternative using file_put_contents:
+// file_put_contents($dest, file_get_contents($src));
+?>
+
+--- Q2. JavaScript: validate name (slip23_q2.html) ---
+Valid name = only letters and spaces.
+<!DOCTYPE html>
+<html>
+<body>
+Name: <input type="text" id="nm">
+<button onclick="check()">Validate</button>
+<script>
+function check() {
+    var name = document.getElementById("nm").value;
+    var pattern = /^[A-Za-z ]+$/;
+    if (pattern.test(name))
+        alert("Valid name");
+    else
+        alert("Invalid name (use only letters and spaces)");
+}
+</script>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 24
+#####################################################################
+
+--- Q1. HTML + CSS: Feedback form (slip24_q1.html) ---
+<!DOCTYPE html>
+<html>
+<head>
+<title>Feedback Form</title>
+<style>
+  body { font-family: Arial; }
+  form { width: 400px; margin: 20px auto; padding: 15px; border: 1px solid gray; }
+  h2 { text-align: center; }
+  input[type=text], select, textarea { width: 100%; margin: 5px 0 10px 0; padding: 5px; }
+</style>
+</head>
+<body>
+<form action="#" method="post">
+  <h2>Feedback Form</h2>
+  Name:
+  <input type="text" name="name">
+
+  Course:
+  <select name="course">
+    <option>B.Sc. CDS</option>
+    <option>B.Sc. Computer Science</option>
+    <option>BCA</option>
+  </select>
+
+  How did you like the lab?<br>
+  <input type="radio" name="rate" value="good"> Good
+  <input type="radio" name="rate" value="avg"> Average
+  <input type="radio" name="rate" value="poor"> Poor
+  <br><br>
+
+  Topics liked:<br>
+  <input type="checkbox" name="t1"> HTML
+  <input type="checkbox" name="t2"> CSS
+  <input type="checkbox" name="t3"> PHP
+  <input type="checkbox" name="t4"> JavaScript
+  <br><br>
+
+  Comments:
+  <textarea name="comments" rows="4"></textarea>
+
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>
+
+--- Q2. PHP: name validation using regular expression (slip24_q2.php) ---
+<html>
+<body>
+<form method="post">
+  Enter name: <input type="text" name="name">
+  <input type="submit" value="Check">
+</form>
+<?php
+if (isset($_POST['name'])) {
+    $name = $_POST['name'];
+    if (preg_match("/^[A-Za-z ]+$/", $name))
+        echo "$name is a VALID name";
+    else
+        echo "Invalid name (only letters and spaces allowed)";
+}
+?>
+</body>
+</html>
+
+
+#####################################################################
+SLIP 25
+#####################################################################
+
+--- Q1. PHP: delete a specific file from the server (slip25_q1.php) ---
+<?php
+$file = "test.txt";
+if (file_exists($file)) {
+    if (unlink($file))
+        echo "File '$file' deleted successfully";
+    else
+        echo "Unable to delete file";
+} else {
+    echo "File does not exist";
+}
+?>
+
+--- Q2. PHP: email-id validation using regular expression (slip25_q2.php) ---
+<html>
+<body>
+<form method="post">
+  Enter Email-id: <input type="text" name="email">
+  <input type="submit" value="Check">
+</form>
+<?php
+if (isset($_POST['email'])) {
+    $email = $_POST['email'];
+    $pattern = "/^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/";
+    if (preg_match($pattern, $email))
+        echo "$email is a VALID email-id";
+    else
+        echo "$email is INVALID";
+}
+?>
+</body>
+</html>
+
+
+=====================================================================
+Q3. VIVA - QUICK NOTES (common questions asked in every slip)
+=====================================================================
+1. PHP = Hypertext Preprocessor, server side scripting language. File ext: .php
+2. PHP code is written inside <?php ... ?>
+3. Variables start with $ ; echo / print are used for output.
+4. Array types: indexed, associative, multidimensional.
+5. Useful array functions: count(), array_merge(), sort(), asort(), arsort(),
+   ksort(), in_array(), array_key_exists(), array_reverse(), extract().
+6. String functions: strlen(), strrev(), strpos(), strtolower(), strtoupper(), explode(), implode().
+7. File modes: r (read), w (write/overwrite), a (append), r+ (read/write).
+8. File functions: fopen(), fclose(), fgets(), fwrite(), feof(), file_exists(),
+   filesize(), copy(), unlink() (delete), file_get_contents().
+9. GET vs POST: GET shows data in URL; POST hides data (more secure).
+10. preg_match() = checks a regular expression pattern.
+11. HTML = HyperText Markup Language. CSS = Cascading Style Sheets.
+12. Types of CSS: Inline (style attribute), Internal (<style> tag), External (.css file with <link>).
+13. JavaScript is a client side scripting language. Output: alert(), document.write(), innerHTML.
+14. Events: onclick, onmouseover, onchange, onload.
+15. Difference between == and === : == compares value, === compares value and type.
+=====================================================================
+                          ALL THE BEST!
+=====================================================================
